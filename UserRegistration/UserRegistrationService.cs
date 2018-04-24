@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Transactions;
 using UserRegistration.Persistance;
 using UserRegistration.Persistance.Model;
 
@@ -21,8 +22,13 @@ namespace UserRegistration
 
         public async Task RegisterUserAsync(User user)
         {
-            _usersDbContext.Add<User>(user);
-            await _usersDbContext.SaveChangesAsync();
+            using(var transaction = await _usersDbContext.Database.BeginTransactionAsync())
+            {
+                _usersDbContext.Add<User>(user);
+                await _usersDbContext.SaveChangesAsync();
+
+                transaction.Commit();
+            }
         }
     }
 }
