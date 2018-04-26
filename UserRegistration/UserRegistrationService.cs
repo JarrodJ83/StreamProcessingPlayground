@@ -30,7 +30,7 @@ namespace UserRegistration
                 _usersDbContext.Add<User>(user);
                 await _usersDbContext.SaveChangesAsync();
 
-                StreamProduceResult dr = await _producer.ProduceAsync("user-registration", null, $"User {user.Id} registered");
+                StreamProduceResult dr = await _producer.ProduceAsync("foo2", null, $"User {user.Id} registered");
 
                 transaction.Commit();
             }

@@ -15,7 +15,7 @@ namespace UserRegistration
         {
             _producer  = new Producer<Null, string>(new Dictionary<string, object> 
                         { 
-                            { "bootstrap.servers", "52.234.230.110:9092" } 
+                            { "bootstrap.servers", "localhost:9092" } 
                         }, null, new StringSerializer(Encoding.UTF8));
         }
         public async Task<StreamProduceResult> ProduceAsync(string topic, Null key, string value)

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UserRegistration.Persistance;
+using UserRegistration.Persistance.Model;
 
 namespace UserRegistration.WebApi
 {
@@ -29,7 +30,7 @@ namespace UserRegistration.WebApi
             services.AddMvc();
             services.AddDbContext<UsersDbContext>(options =>
             {
-                  options.UseSqlite("Data Source=C:\\github\\EDA\\UserRegistration.db", 
+                  options.UseSqlite("Data Source=UserRegistration.db", 
                             o => o.MigrationsAssembly("UserRegistration.WebApi"));
             });
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
