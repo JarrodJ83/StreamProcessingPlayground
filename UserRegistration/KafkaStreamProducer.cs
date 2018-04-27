@@ -7,18 +7,15 @@ using Confluent.Kafka.Serialization;
 
 namespace UserRegistration
 {
-    public class KafkaStreamProducer : IStreamProducer<Null, string>, IDisposable   
+    public class KafkaStreamProducer : IStreamProducer<int, string>, IDisposable   
     {
         
-        Producer<Null, string> _producer;
-        public KafkaStreamProducer()
+        Producer<int, string> _producer;
+        public KafkaStreamProducer(Producer<int, string> producer)
         {
-            _producer  = new Producer<Null, string>(new Dictionary<string, object> 
-                        { 
-                            { "bootstrap.servers", "localhost:9092" } 
-                        }, null, new StringSerializer(Encoding.UTF8));
+            _producer  = producer;
         }
-        public async Task<StreamProduceResult> ProduceAsync(string topic, Null key, string value)
+        public async Task<StreamProduceResult> ProduceAsync(string topic, int key, string value)
         {
             var result = await _producer.ProduceAsync(topic, key, value);
 

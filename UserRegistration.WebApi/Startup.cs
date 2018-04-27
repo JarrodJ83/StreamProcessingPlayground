@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
+using Confluent.Kafka.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +36,12 @@ namespace UserRegistration.WebApi
                             o => o.MigrationsAssembly("UserRegistration.WebApi"));
             });
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
-            services.AddSingleton<IStreamProducer<Null, string>, KafkaStreamProducer>();
+            services.AddSingleton<IStreamProducer<int, string>, KafkaStreamProducer>();
+            services.AddSingleton<Producer<int, string>>(serviceProvider => new Producer<int, string>(new Dictionary<string, object> 
+                        { 
+                            { "bootstrap.servers", "localhost:9092" } 
+                        }, new IntSerializer(), new StringSerializer(Encoding.UTF8))
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
