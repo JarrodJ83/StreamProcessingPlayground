@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using UserRegistration.Persistance.Model;
+using UserRegistration.ClientModel;
 
 namespace UserRegistration
 {
     public interface IUserRegistrationService
     {
-        Task RegisterUserAsync(User user);
+        Task RegisterUserAsync(NewUser user);
         Task ActivateUserAsync(Guid userId);
     }
 }

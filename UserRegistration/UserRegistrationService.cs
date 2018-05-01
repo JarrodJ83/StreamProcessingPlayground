@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Confluent.Kafka;
 using Newtonsoft.Json;
+using UserRegistration.ClientModel;
 using UserRegistration.Persistance;
 using UserRegistration.Persistance.Model;
 
@@ -24,16 +25,23 @@ namespace UserRegistration
             throw new NotImplementedException();
         }
 
-        public async Task RegisterUserAsync(User user)
+        public async Task RegisterUserAsync(NewUser newUser)
         {
             using(var transaction = await _usersDbContext.Database.BeginTransactionAsync())
             {
-                _usersDbContext.Add<User>(user);
+                var addUser = new User{
+                    FirstName = newUser.FirstName,
+                    LastName = newUser.LastName,
+                    RegistrationDate = DateTime.UtcNow
+                };
+                
+                _usersDbContext.Add<User>(addUser);
+
                 await _usersDbContext.SaveChangesAsync();
 
-                string userJson = JsonConvert.SerializeObject(user);
+                string userJson = JsonConvert.SerializeObject(addUser);
 
-                StreamProduceResult dr = await _producer.ProduceAsync("user-registration", user.Id, userJson);
+                StreamProduceResult dr = await _producer.ProduceAsync("user-registration", addUser.Id, userJson);
 
                 if(dr.Exception != null)  
                 {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using UserRegistration.Persistance.Model;
+using UserRegistration.ClientModel;
 
 namespace UserRegistration.WebApi.Controllers
 {
@@ -15,9 +15,9 @@ namespace UserRegistration.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task AddUser([FromBody]User user)
+        public async Task AddUser([FromBody]NewUser newUser)
         {
-            await _userRegistrationService.RegisterUserAsync(user);   
+            await _userRegistrationService.RegisterUserAsync(newUser);   
         }
     }
 }

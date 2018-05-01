@@ -10,5 +10,7 @@ namespace UserRegistration.Persistance.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime RegistrationDate { get; set; }
+        bool IsActive { get; set; }
+        public DateTime ActivationDate { get; set; }
     }
 }
