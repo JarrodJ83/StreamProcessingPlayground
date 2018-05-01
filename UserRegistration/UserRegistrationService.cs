@@ -35,6 +35,11 @@ namespace UserRegistration
 
                 StreamProduceResult dr = await _producer.ProduceAsync("user-registration", user.Id, userJson);
 
+                if(dr.Exception != null)  
+                {
+                    throw dr.Exception;
+                } 
+                
                 transaction.Commit();
             }
         }
