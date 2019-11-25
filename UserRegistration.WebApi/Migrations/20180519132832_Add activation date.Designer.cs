@@ -11,9 +11,10 @@ using UserRegistration.Persistance;
 namespace UserRegistration.WebApi.Migrations
 {
     [DbContext(typeof(UsersDbContext))]
-    partial class UsersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180519132832_Add activation date")]
+    partial class Addactivationdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
